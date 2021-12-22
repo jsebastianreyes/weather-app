@@ -404,3 +404,31 @@ try{
 }catch{
 
 }
+
+
+
+//test
+
+
+const getDate = {
+  year: new Date().getFullYear(),
+  mes: new Date().getMonth(),
+
+}
+
+// console.log(getDate)
+
+const myBirthday = {
+  year: 1994,
+  mes:  3,
+}
+
+function calcularEdad(){
+  const año = (getDate.year - myBirthday.year)
+  const mes = (getDate.mes - myBirthday.mes)
+
+  console.log(`${año} años y ${mes} meses`)
+
+}
+
+calcularEdad(getDate, myBirthday)
