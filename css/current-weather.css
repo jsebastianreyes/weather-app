@@ -23,6 +23,10 @@ p.currentWeather-date {
   margin-block-end: 1rem;
 }
 
+p.currentWeather-date::first-letter{
+  text-transform: uppercase;
+}
+
 .currentWeather-city {
   font: var(--caption-caption);
   padding-inline-start: 1rem;
