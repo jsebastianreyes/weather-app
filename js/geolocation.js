@@ -16,7 +16,7 @@ export function getCurrentPosition(options = defaultOptions){
   if (!geolocationSupport) throw new Error('Ha ocurrido un error con el soporte de Geolocalización🙃')
   return new Promise((resolve,reject)=>{
     navigator.geolocation.getCurrentPosition(position => {
-      console.log(position)
+      // console.log(position)
       resolve(position)
     }, () => {
       reject('Fallo en la app 😥')

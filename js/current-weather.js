@@ -1,5 +1,5 @@
 
-import weather from '../data/current-weather.js'
+// import weather from '../data/current-weather.js'
 import { formatDate, formatTemp} from './utils/format-data.js'
 import { weatherConditionCodes} from './constants.js'
 import { getLatLon } from './geolocation.js'
@@ -82,15 +82,16 @@ export default async function currentWeather(){
   // })
   // console.log(getCurrentPosition())
 
-
+  //Obtner latitud y longitud
   const { lat, lon, isError } = await getLatLon()
-  // console.log(isError)
+  //Validación
   if(isError)return console.log('ah ocurrido un error ubicandote 😑')
-  // console.log(lat, lon)
-
-  const test = await getDataWeather(lat, lon)
-  console.log(test)
-  configCurrentWeather(test)
+  //obtener datos de la API
+  const {dataWeather: weather, isError: currentWeatherError} = await getDataWeather(lat, lon)
+  //Validación
+  if (currentWeatherError) return console.log('ah ocurrido un error con la API 😑')
+  //Configuraciones en base a la API
+  configCurrentWeather(weather)
   // console.log(weather)
 }
 
