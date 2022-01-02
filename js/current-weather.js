@@ -24,8 +24,8 @@ function solarStatus(sunrise, sunset){
   const sunriseTime = sunrise.getHours()
   const sunsetTime = sunset.getHours()
   const currentTime = new Date().getHours()
-  // console.log(sunriseTime)
-  // console.log(sunsetTime)
+  console.log(sunriseTime)
+  console.log(sunsetTime)
   // console.log(currentTime)
   if(currentTime >= sunriseTime && currentTime < sunsetTime){
     return 'morning'
@@ -45,12 +45,19 @@ function setBackground($elemento, solarStatus, conditionCode){
   // // }
 
 
-  $elemento.style.backgroundImage = `url(../weather-app/images/${solarStatus}-${weatherType}${size}.jpg)`
+  $elemento.style.backgroundImage = `url(./images/weather-app/${solarStatus}-${weatherType}${size}.jpg)`
 }
 
+function showCurrentWeather($app, $loading){
+  $app.hidden = false
+  $loading.hidden = true
+}
 function configCurrentWeather(weather){
 
   //Loader
+  const $loading = document.querySelector('#loading')
+  const $app = document.querySelector('#app')
+  showCurrentWeather($app, $loading)
 
   //Fecha actual
   const $currentWeatherDate = document.querySelector('#current-weather-date')
@@ -64,7 +71,7 @@ function configCurrentWeather(weather){
   const temp = weather.main.temp
   setCurrentTemp($currentWeatherTemp, temp)
   //bg dinamico
-  const $app = document.querySelector('#app')
+
   const sunriseTime = new Date(weather.sys.sunrise * 1000)
   const sunsetTime = new Date(weather.sys.sunset * 1000)
   const conditionCode = String(weather.weather[0].id).charAt(0)
@@ -86,13 +93,13 @@ export default async function currentWeather(){
   //Obtner latitud y longitud
   const { lat, lon, isError } = await getLatLon()
   //Validación
-  if(isError)return console.log('ah ocurrido un error ubicandote 😑')
+  if(isError)return console.log('Ha ocurrido un error ubicandote 😑')
   //obtener datos de la API
   const {dataWeather: weather, isError: currentWeatherError} = await getDataWeather(lat, lon)
   //Validación
-  if (currentWeatherError) return console.log('ah ocurrido un error con la API 😑')
+  if (currentWeatherError) return console.log('Ha ocurrido un error con la API 😑')
   //Configuraciones en base a la API
   configCurrentWeather(weather)
-  // console.log(weather)
+  console.log(weather)
 }
 
