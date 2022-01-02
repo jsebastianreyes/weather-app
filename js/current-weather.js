@@ -44,9 +44,10 @@ function setBackground($elemento, solarStatus, conditionCode){
   // //   size = '@2x'
   // // }
 
-
-  $elemento.style.backgroundImage = `url(./weather-app/images/${solarStatus}-${weatherType}${size}.jpg)`
-  // $elemento.style.backgroundImage = `url(./weather-app/images/${solarStatus}-${weatherType}${size}.jpg)`
+  //local
+  // $elemento.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}${size}.jpg)`
+  //github
+  $elemento.style.backgroundImage = `url(../weather-app/images/${solarStatus}-${weatherType}${size}.jpg)`
 }
 
 function showCurrentWeather($app, $loading){
