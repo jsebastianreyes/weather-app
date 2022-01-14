@@ -6,6 +6,14 @@ import './modular.js';
 //Let
 //Const
 
+function test(obj){
+  console.log(obj)
+}
+
+test({ number: 500, percentage: 99 })
+
+
+
 {
   let name = 'Juan'
   {

@@ -1,0 +1,11 @@
+ .hours-weather section{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(9rem, 15rem));
+  grid-template-rows: repeat(2, 2rem);
+}
+
+.hours-weather section p{
+  margin: 0;
+  padding: 0;
+}
+

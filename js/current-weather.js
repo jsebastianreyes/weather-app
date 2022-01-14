@@ -1,105 +1,95 @@
-
 // import weather from '../data/current-weather.js'
-import { formatDate, formatTemp} from './utils/format-data.js'
-import { weatherConditionCodes} from './constants.js'
+import { formatDate, formatTemp } from './utils/format-data.js'
+import { weatherConditionsCodes } from './constants.js'
 import { getLatLon } from './geolocation.js'
-import { getDataWeather } from './services/weather.js'
+import { getCurrentWeather } from './services/weather.js'
+// weather.main.temp //?
+// weatherConditionsCodes[] //?
 
-function setCurrentCity($element, city){
-  $element.textContent = city
+function setCurrentCity($el, city) {
+  $el.textContent = city
 }
 
 
-function setCurrentDate($element){
-  const date = new Date
+function setCurrentDate($el) {
+  const date = new Date()
   const formattedDate = formatDate(date)
-  $element.textContent = formattedDate
+  $el.textContent = formattedDate
 }
 
-function setCurrentTemp($elemento, temp){
-  $elemento.textContent = formatTemp(temp)
+function setCurrentTemp($el, temp) {
+  $el.textContent = formatTemp(temp)
 }
 
-function solarStatus(sunrise, sunset){
+function solarStatus(sunrise, sunset) {
   const sunriseTime = sunrise.getHours()
   const sunsetTime = sunset.getHours()
   const currentTime = new Date().getHours()
-  console.log(sunriseTime)
-  console.log(sunsetTime)
-  // console.log(currentTime)
-  if(currentTime >= sunriseTime && currentTime < sunsetTime){
+
+  if (currentTime >= sunriseTime && currentTime < sunsetTime) {
     return 'morning'
   }
   return 'night'
 }
 
-
-
-function setBackground($elemento, solarStatus, conditionCode){
-  const weatherType = weatherConditionCodes[conditionCode]
-
-  const size = window.matchMedia("(-webkit-min-device-pixel-ratio: 2)").matches ? '@2k' : ''
+function setBackground($el, conditionCode, solarStatus) {
+  const weatherType = weatherConditionsCodes[conditionCode]
+  const size = window.matchMedia('(-webkit-min-device-pixel-ratio: 2)').matches ? '@2x' : ''
   // let size = ''
-  // // if (window.matchMedia("(-webkit-min-device-pixel-ratio: 2)").matches){
-  // //   size = '@2x'
-  // // }
-
-  //local
-  $elemento.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}${size}.jpg)`
+  // if (window.matchMedia('(-webkit-min-device-pixel-ratio: 2)').matches) {
+  //   size = '@2x'
+  // }
+  // true ? '@2x' : ''
+  $el.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}${size}.jpg)`
 }
 
-function showCurrentWeather($app, $loading){
+function showCurrentWeather($app, $loader) {
   $app.hidden = false
-  $loading.hidden = true
+  $loader.hidden = true
 }
-function configCurrentWeather(weather){
 
-  //Loader
-  const $loading = document.querySelector('#loading')
+function configCurrentWeather(weather) {
   const $app = document.querySelector('#app')
-  showCurrentWeather($app, $loading)
+  const $loading = document.querySelector('#loading')
 
-  //Fecha actual
+  // loader
+  showCurrentWeather($app, $loading)
+  // date
   const $currentWeatherDate = document.querySelector('#current-weather-date')
   setCurrentDate($currentWeatherDate)
-  //city
+  // city
   const $currentWeatherCity = document.querySelector('#current-weather-city')
   const city = weather.name
-  setCurrentCity($currentWeatherCity, city )
-  //temperatura
+  setCurrentCity($currentWeatherCity, city)
+  // temp
   const $currentWeatherTemp = document.querySelector('#current-weather-temp')
   const temp = weather.main.temp
   setCurrentTemp($currentWeatherTemp, temp)
-  //bg dinamico
 
+  // background
   const sunriseTime = new Date(weather.sys.sunrise * 1000)
   const sunsetTime = new Date(weather.sys.sunset * 1000)
   const conditionCode = String(weather.weather[0].id).charAt(0)
-
-  setBackground($app,solarStatus(sunriseTime, sunsetTime), conditionCode)
+  setBackground($app, conditionCode, solarStatus(sunriseTime, sunsetTime))
 }
 
-
-export default async function currentWeather(){
+export default async function currentWeather() {
+  // GEO // API - weather // Config
+  // console.log('esto pasa ANTES de getCurrentPosition')
+  const { lat, lon, isError } = await getLatLon()
+  if (isError) return console.log('A ocurrido un error ubicandote')
+  // console.log(lat, lon)
   // getCurrentPosition()
-  // .then((data)=>{
-  //   console.log(data)
+  // .then((data) => {
+  //   console.log('hemos triunfado', data)
+
   // })
-  // .catch((message)=>{
+  // .catch((message) => {
   //   console.log(message)
   // })
-  // console.log(getCurrentPosition())
-
-  //Obtner latitud y longitud
-  const { lat, lon, isError } = await getLatLon()
-  //Validación
-  if(isError)return console.log('Ha ocurrido un error ubicandote 😑')
-  //obtener datos de la API
-  const {dataWeather: weather, isError: currentWeatherError} = await getDataWeather(lat, lon)
-  //Validación
-  if (currentWeatherError) return console.log('Ha ocurrido un error con la API 😑')
-  //Configuraciones en base a la API
+  // console.log('esto pasa DESPUES de getCurrentPosition')
+  const { isError: currentWeatherError, data: weather } = await getCurrentWeather(lat, lon)
+  if (currentWeatherError) return console.log('oh! a ocurrido un error trayendo lo datos del clima')
   configCurrentWeather(weather)
-  console.log(weather)
+  // console.log(weather)
 }
-
