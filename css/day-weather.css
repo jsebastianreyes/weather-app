@@ -1,5 +1,8 @@
 .dayWeather {
   /* border: 1px solid red; */
+  outline: none;
+  touch-action: none;
+  user-select: none;
 }
 
 .dayWeather-list {

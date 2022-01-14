@@ -3,7 +3,11 @@
   padding-inline: 1rem;
   inline-size: 100vw;
   box-sizing: border-box;
+  cursor: pointer;
+  outline: 0;
 }
+
+
 
 .tab {
   border-block-end: .25rem solid transparent;
@@ -22,5 +26,9 @@
 
 .tabList:not([hidden]) {
   display: flex;
+}
+
+.tabPanel{
+  outline: 0;
 }
 
