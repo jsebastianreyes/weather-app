@@ -12,6 +12,8 @@
   margin: 0;
 }
 
+
+
 .currentWeather-temp {
   font-size: 56px;
   vertical-align: middle;
@@ -21,6 +23,10 @@
 p.currentWeather-date {
   font: var(--caption-caption);
   margin-block-end: 1rem;
+}
+
+p.currentWeather-date::first-letter{
+  text-transform: uppercase;
 }
 
 .currentWeather-city {
