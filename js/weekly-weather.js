@@ -30,6 +30,7 @@ function createTabPanel(id) {
 }
 
 function configWeeklyWeather(weeklist) {
+  console.log(weeklist)
   const $container = document.querySelector('.tabs')
   weeklist.forEach((day, index) => {
     const $panel = createTabPanel(index)
@@ -52,6 +53,7 @@ function configWeeklyWeather(weeklist) {
     const weeklist = formatWeekList(weather.list)
     // console.log(weather.list)
     configWeeklyWeather(weeklist)
+
     tabForHours()
     draggable($container)
 

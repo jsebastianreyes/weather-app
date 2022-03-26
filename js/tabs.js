@@ -30,6 +30,7 @@ $tabList.forEach(($tab, index) => {
     return false
   }
   $tab.textContent = week[weekday]
+  // weekday = weekday+1
   weekday = nextDay(weekday)
 })
 
