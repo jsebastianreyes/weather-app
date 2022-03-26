@@ -1,23 +1,35 @@
-@import './global.css';
-@import './current-weather.css';
-@import './weekly-weather.css';
-@import './tabs.css';
-@import './day-weather.css';
-@import './loading.css';
-@import './hours-weather.css';
+@import './loader.css';
+@import './button-large.css';
+@import './app.css';
+@import './modal.css';
+@import './bubble.css';
 
-.app {
-  block-size: 100vh;
-  background-image: url('../images/morning-clean.jpg');
-  background-size: cover;
-  background-position: right bottom;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
+
+
+:root{
+  --baseFont: 'Roboto Condensed', sans-serif;
+  --white: #ffffff;
+  --black: #333333;
+  --adicalred: #ff4672;
+  --mediumorchid: #b169fa;
+  --skyblue: #4cdafe;
+  --lawngreen: #92f200;
+  --body-24bold: 700 1.5rem/normal var(--baseFont);
 }
 
-.app[hidden] {
-  display: none;
+html{
+  overflow: hidden;
+}
+
+body{
+  font: var(--body-24bold);
+  margin: 0;
+  padding: 0;
+  color: var(--white);
+  overflow: hidden;
+}
+
+p{
+  margin: 0;
+  padding: 0;
 }
